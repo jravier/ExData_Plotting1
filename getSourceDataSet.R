@@ -42,14 +42,13 @@ datadwnld<-function(theurl, datadir="."){
 
 # check the existence of the data set. If not, proceed !
 if (!exists("epcDataset"))
-epcDataset=fread(datadwnld(urlDataSource, "data"), na.strings = "?", 
-                 colClasses = c("factor", "factor", "numeric", 
-                                "numeric", "numeric", "numeric", 
-                                "numeric", "numeric", "numeric")) %>% 
+epcDataset=fread(datadwnld(urlDataSource, "data"), 
+                 na.strings = "?", 
+                 colClasses = c(rep("factor", 2), rep("numeric", 7))) %>% 
     filter(Date=="1/2/2007" | Date=="2/2/2007") %>%
-        mutate(instant=as.POSIXct(strptime(paste(Date, Time), 
-                                           "%d/%m/%Y %H:%M:%S"))) %>% 
-        select(10, 3:9)
+    mutate(instant=as.POSIXct(strptime(paste(Date, Time), 
+                                       "%d/%m/%Y %H:%M:%S"))) %>% 
+    select(10, 3:9)
 
 
 
