@@ -2,15 +2,17 @@ urlDataSource="https://d396qusza40orc.cloudfront.net/exdata%2Fdata%2Fhousehold_p
 
 library(data.table)
 library(dplyr)
-library(lubridate)
+#library(lubridate)
 
 ######   datadwnld(theurl, datadir=".")   ######
-# download the file located at the specified URL
-#   to the specified directory, 
+# Function that download the file located at the
+#   specified URL to the specified directory, 
 #   only if it doesn't exists yet
 # if it's a zip file, unzip it
 #   only if the content doesn't exists yet
-# return the relative path to the (extracted) file(s)
+#
+# It returns the relative path to the (extracted) file(s)
+#
 datadwnld<-function(theurl, datadir="."){
     if (!file.exists(datadir)) dir.create(datadir)
     thefile=file.path(datadir, last(strsplit(URLdecode(theurl),"/")[[1]]))
@@ -30,6 +32,8 @@ epcDataset=fread(datadwnld(urlDataSource, "data"), na.strings = "?",
                                 "numeric", "numeric", "numeric", 
                                 "numeric", "numeric", "numeric")) %>% 
     filter(Date=="1/2/2007" | Date=="2/2/2007") %>%
-        mutate(instant=as.POSIXct(dmy(Date) +hms(Time))) %>% 
+        mutate(instant=as.POSIXct(strptime(paste(Date, Time), 
+                                           "%d/%m/%Y %H:%M:%S"))) %>% 
         select(10, 3:9)
 
+#as.POSIXct(dmy(Date) +hms(Time)) # removed the need for lubridate
