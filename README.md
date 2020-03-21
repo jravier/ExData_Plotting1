@@ -1,6 +1,7 @@
 ## About my submission
 Pleas note that each of the "plotX.R" script load the code for getting the data from the "getSourceDataSet.R" script (via a `source('getSourceDataSet.R')`command at their beginning).  
 So if you want to test my script, you'll have to make sur that you have this "getSourceDataSet.R" along with the "plotX.R" script.  
+Also, please note that the code uses the data.table & dplyr libraries. so install them if don't have thm yet on your system.  
 
 ## Introduction
 
