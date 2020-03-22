@@ -20,43 +20,42 @@ source('getSourceDataSet.R')
 # So I record here my country's TIME locale
 my_locale=Sys.getlocale(category = "LC_TIME")
 
-
-
-######  making the plot and writing the PNG file  ######
-## Open PNG device; create 'plot1.png' in my working directory
-## use the default settings: width of 480 pixels and height of 480 pixels
-png(file = "plot4.png") 
-
-# Multiple Base Plots Parameters.
-par(mfcol = c(2, 2), mar = c(4, 4, 4, 2))   #, oma = c(0, 0, 2, 0)"
-
 # Change TIME locale to something displaying days in English.
 Sys.setlocale(category = "LC_TIME", locale = "C")
 
-## Create Same plot as plot2 (except for ylab, without  (kilowatts))
-with(epcDataset, plot(instant, Global_active_power, type="l",
+######  making the plots and writing the PNG file  ######
+with(epcDataset, {
+    ## Open PNG device; create 'plot1.png' in my working directory
+    ## use the default settings: width of 480 pixels and height of 480 pixels
+    png(file = "plot4.png")
+    
+    # Multiple Base Plots Parameters.
+    par(mfcol = c(2, 2), mar = c(4, 4, 4, 2))   #, oma = c(0, 0, 2, 0)"
+    
+    ## Create Same plot as plot2 (except for ylab, without  (kilowatts))
+     plot(instant, Global_active_power, type="l",
                       xlab = "",
-                      ylab = "Global Active Power"))
+                      ylab = "Global Active Power")
 
-## Create Same plot as plot3 (except for a few settings in legend)
-with(epcDataset, plot(instant, Sub_metering_1, type="l",
+    ## Create Same plot as plot3 (except for a few settings in legend)
+    plot(instant, Sub_metering_1, type="l",
                       xlab = "",
-                      ylab = "Energy sub metering"))
-with(epcDataset, lines(instant, Sub_metering_2, col="red"))
-with(epcDataset, lines(instant, Sub_metering_3, col="blue"))
-legend("topright", bty = "n", cex=0.9, lty = 1, col = c("black", "blue", "red"), 
+                      ylab = "Energy sub metering")
+    lines(instant, Sub_metering_2, col="red")
+    lines(instant, Sub_metering_3, col="blue")
+    legend("topright", bty = "n", cex=0.9, lty = 1, col = c("black", "blue", "red"), 
        legend = c("Sub_metering_1","Sub_metering_2", "Sub_metering_3"))
 
-# Create new plot with Voltage
-with(epcDataset, plot(instant, Voltage, type="l",xlab = "datetime"))
+    # Create new plot with Voltage
+    plot(instant, Voltage, type="l",xlab = "datetime")
 
-# Create new plot with Global_reactive_power
-with(epcDataset, plot(instant, Global_reactive_power, type="l",xlab = "datetime"))
-
+    # Create new plot with Global_reactive_power
+    plot(instant, Global_reactive_power, type="l",xlab = "datetime")
+    
+    ## Close the PNG file device
+    dev.off() 
+})
 
 # Reverse back to my country's TIME locale.
 Sys.setlocale(category = "LC_TIME", locale = my_locale)
-
-## Close the PNG file device
-dev.off() 
 
