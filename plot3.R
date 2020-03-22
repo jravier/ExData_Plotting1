@@ -20,28 +20,28 @@ source('getSourceDataSet.R')
 # So I record here my country's TIME locale
 my_locale=Sys.getlocale(category = "LC_TIME")
 
-
-
-######  making the plot and writing the PNG file  ######
-## Open PNG device; create 'plot1.png' in my working directory
-## use the default settings: width of 480 pixels and height of 480 pixels
-png(file = "plot3.png") 
-
 # Change TIME locale to something displaying days in English.
 Sys.setlocale(category = "LC_TIME", locale = "C")
 
-## Create plot and send to the file (no plot appears on screen)
-with(epcDataset, plot(instant, Sub_metering_1, type="l",
-                      xlab = "",
-                      ylab = "Energy sub metering"))
-with(epcDataset, lines(instant, Sub_metering_2, col="red"))
-with(epcDataset, lines(instant, Sub_metering_3, col="blue"))
-legend("topright", lty = 1, col = c("black", "blue", "red"), 
-       legend = c("Sub_metering_1","Sub_metering_2", "Sub_metering_3"))
+
+######  making the plot and writing the PNG file  ######
+with(epcDataset, {
+    ## Open PNG device; create 'plot1.png' in my working directory
+    ## use the default settings: width of 480 pixels and height of 480 pixels
+    png(file = "plot3.png") 
+    
+    ## Create plot and send to the file (no plot appears on screen)
+    plot(instant, Sub_metering_1, type="l",
+         xlab = "",
+         ylab = "Energy sub metering")
+    lines(instant, Sub_metering_2, col="red")
+    lines(instant, Sub_metering_3, col="blue")
+    legend("topright", lty = 1, col = c("black", "blue", "red"), 
+           legend = c("Sub_metering_1","Sub_metering_2", "Sub_metering_3"))
+    
+    ## Close the PNG file device
+    dev.off() 
+})
 
 # Reverse back to my country's TIME locale.
 Sys.setlocale(category = "LC_TIME", locale = my_locale)
-
-## Close the PNG file device
-dev.off() 
-

@@ -33,22 +33,23 @@ with(epcDataset, {
     par(mfcol = c(2, 2), mar = c(4, 4, 4, 2))   #, oma = c(0, 0, 2, 0)"
     
     ## Create Same plot as plot2 (except for ylab, without  (kilowatts))
-     plot(instant, Global_active_power, type="l",
-                      xlab = "",
-                      ylab = "Global Active Power")
-
+    plot(instant, Global_active_power, type="l",
+         xlab = "",
+         ylab = "Global Active Power")
+    
     ## Create Same plot as plot3 (except for a few settings in legend)
     plot(instant, Sub_metering_1, type="l",
-                      xlab = "",
-                      ylab = "Energy sub metering")
+         xlab = "",
+         ylab = "Energy sub metering")
     lines(instant, Sub_metering_2, col="red")
     lines(instant, Sub_metering_3, col="blue")
-    legend("topright", bty = "n", cex=0.9, lty = 1, col = c("black", "blue", "red"), 
-       legend = c("Sub_metering_1","Sub_metering_2", "Sub_metering_3"))
-
+    legend("topright", bty = "n", cex=0.9, lty = 1, 
+           col = c("black", "blue", "red"), 
+           legend = c("Sub_metering_1","Sub_metering_2", "Sub_metering_3"))
+    
     # Create new plot with Voltage
     plot(instant, Voltage, type="l",xlab = "datetime")
-
+    
     # Create new plot with Global_reactive_power
     plot(instant, Global_reactive_power, type="l",xlab = "datetime")
     

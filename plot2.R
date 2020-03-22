@@ -17,22 +17,23 @@ source('getSourceDataSet.R')
 # I still want to have the days on the X axis in English.
 my_locale=Sys.getlocale(category = "LC_TIME")
 
+# Change locale to something displaying days in english.
+Sys.setlocale(category = "LC_TIME", locale = "C")
+
+
 ######  making the plot and writing the PNG file  ######
 ## Open PNG device; create 'plot1.png' in my working directory
 ## use the default settings: width of 480 pixels and height of 480 pixels
 png(file = "plot2.png") 
-
-# Change locale to something displaying days in english.
-Sys.setlocale(category = "LC_TIME", locale = "C")
 
 ## Create plot and send to the file (no plot appears on screen)
 with(epcDataset, plot(instant, Global_active_power, type="l",
                       xlab = "",
                       ylab = "Global Active Power (kilowatts)"))
 
-# Reverse back to my country's locale.
-Sys.setlocale(category = "LC_TIME", locale = my_locale)
-
 ## Close the PNG file device
 dev.off() 
+
+# Reverse back to my country's locale.
+Sys.setlocale(category = "LC_TIME", locale = my_locale)
 
